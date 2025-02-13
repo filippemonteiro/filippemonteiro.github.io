@@ -2768,23 +2768,23 @@ input[type="button"]:disabled,
 }
 
 #footer .icons a:hover {
-  color: #BBBBBB; /* Cor padrão para hover */
+  color: #bbbbbb; /* Cor padrão para hover */
 }
 
 #footer .icons a[href*="github"]:hover {
-  color: #BBBBBB; /* GitHub */
+  color: #bbbbbb; /* GitHub */
 }
 
 #footer .icons a[href*="linkedin"]:hover {
-  color: #00A0DC; /* LinkedIn */
+  color: #00a0dc; /* LinkedIn */
 }
 
 #footer .icons a[href*="whatsapp"]:hover {
-  color: #4FCE5D; /* WhatsApp */
+  color: #4fce5d; /* WhatsApp */
 }
 
 #footer .icons a[href*="mailto"]:hover {
-  color: #ADD8E6; /* Email */
+  color: #add8e6; /* Email */
 }
 
 #footer .copyright {
@@ -3353,19 +3353,26 @@ body.is-touch .poptrox-popup .closer {
   }
 }
 
+/* Custons */
+
+.custom_a {
+  cursor: pointer;
+  border-bottom: none;
+}
+
 .custom_i {
   color: #49bf9d;
 }
 
 /* Alterar cores do telefone e email na seção "Entrar em contato" ao passar o mouse */
 #three .labeled-icons a:hover {
-  color: #1E90FF; /* Cor padrão para hover */
+  color: #1e90ff; /* Cor padrão para hover */
 }
 
 #three .labeled-icons a[href*="tel"]:hover {
-  color: #1E90FF; /* Número de telefone */
+  color: #1e90ff; /* Número de telefone */
 }
 
 #three .labeled-icons a[href*="mailto"]:hover {
-  color: #32CD32; /* Email */
+  color: #32cd32; /* Email */
 }
