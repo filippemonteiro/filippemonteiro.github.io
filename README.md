@@ -1,7 +1,5 @@
 # Portfolio - Filippe Monteiro
 
-![Portfolio Preview](img/avatar.jpg)
-
 ## 🚀 Sobre o Projeto
 
 Portfolio pessoal desenvolvido para apresentar minhas habilidades como Desenvolvedor Front-end e Designer. O site foi construído com foco em performance, acessibilidade e facilidade de manutenção.
