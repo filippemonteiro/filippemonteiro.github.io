@@ -50,51 +50,49 @@ const Navigation = () => {
         `}
       >
         <nav className="container-responsive">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-16 md:h-18">
             
-            {/* Logo/Nome */}
-            <div className="flex-shrink-0">
+            {/* Logo/Nome - Mais compacto */}
+            <div className="flex-shrink-0 min-w-0">
               <button 
                 onClick={() => handleScrollTo('#home')}
                 className="group flex items-center space-x-3 transition-all duration-300"
               >
                 {/* Avatar/Logo */}
                 <div className="relative">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-primary-purple to-primary-blue p-0.5">
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary-purple to-primary-blue p-0.5">
                     <div className="w-full h-full rounded-full bg-dark-bg flex items-center justify-center">
-                      <span className="text-lg md:text-xl font-bold text-gradient">
+                      <span className="text-sm md:text-base font-bold text-gradient">
                         FM
                       </span>
                     </div>
                   </div>
                   {/* Indicator online */}
-                  <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-dark-bg"></div>
+                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-dark-bg"></div>
                 </div>
                 
-                {/* Nome */}
-                <div className="hidden sm:block">
-                  <h1 className="text-lg md:text-xl font-semibold text-white group-hover:text-gradient transition-all duration-300">
+                {/* Nome - Mais compacto */}
+                <div className="hidden sm:block min-w-0">
+                  <h1 className="text-base md:text-lg font-semibold text-white group-hover:text-gradient transition-all duration-300 truncate">
                     Filippe Andrade Monteiro
                   </h1>
-                  <p className="text-xs md:text-sm text-gray-400">
+                  <p className="text-xs text-gray-400 truncate">
                     Desenvolvedor Front-End
                   </p>
                 </div>
               </button>
             </div>
 
-            {/* Menu Desktop - Hidden em mobile */}
-            <div className="hidden md:flex items-center space-x-1">
+            {/* Menu Desktop - Mais compacto */}
+            <div className="hidden md:flex items-center space-x-1 flex-shrink-0">
               {menuItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => handleScrollTo(item.href)}
-                  className="nav-link px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10"
+                  className="nav-link px-3 py-2 rounded-lg transition-all duration-300 hover:bg-white/10 flex items-center space-x-1.5"
                 >
-                  <span className="flex items-center space-x-2">
-                    <item.icon size={18} />
-                    <span>{item.label}</span>
-                  </span>
+                  <item.icon size={16} />
+                  <span className="text-sm">{item.label}</span>
                 </button>
               ))}
             </div>
