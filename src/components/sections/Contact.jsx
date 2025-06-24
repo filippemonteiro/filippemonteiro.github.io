@@ -299,7 +299,7 @@ const Contact = () => {
                 </div>
                 <p className="text-gray-300 text-sm">Fortaleza, CE - Brasil</p>
                 <p className="text-gray-400 text-xs mt-2">
-                  Disponível para trabalho remoto
+                  Disponível para trabalho local e remoto
                 </p>
               </div>
 
@@ -334,20 +334,6 @@ const Contact = () => {
                     </motion.a>
                   ))}
                 </div>
-              </div>
-
-              {/* Status de disponibilidade */}
-              <div className="glass-card p-6 bg-gradient-to-br from-green-500/10 to-primary-purple/10 border-green-500/20">
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-green-400 font-medium text-sm">
-                    Disponível para novos projetos
-                  </span>
-                </div>
-                <p className="text-gray-300 text-sm">
-                  Buscando oportunidades como Desenvolvedor Front-End Júnior ou
-                  Estagiário
-                </p>
               </div>
             </motion.div>
           </div>
