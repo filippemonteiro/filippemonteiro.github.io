@@ -55,7 +55,7 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
 
   return (
     <motion.article
-      className={cardVariants[variant]}
+      className={`${cardVariants[variant]} relative overflow-hidden`}
       variants={cardAnimation}
       initial="initial"
       animate="animate"
@@ -63,31 +63,42 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      {/* Status Badge */}
-      {project.status && (
+      {/* Status, Featured Badges e Year */}
+      {(project.status || project.featured || project.year) && (
         <div className="flex justify-between items-start mb-4">
-          <span
-            className={`
-            px-3 py-1 rounded-full text-xs font-medium
-            ${
-              project.status === "completed"
-                ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                : project.status === "in-progress"
-                ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
-                : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-            }
-          `}
-          >
-            {project.status === "completed"
-              ? "Concluído"
-              : project.status === "in-progress"
-              ? "Em andamento"
-              : "Planejamento"}
-          </span>
+          <div className="flex gap-2 flex-wrap">
+            {project.status && (
+              <span
+                className={`
+                px-3 py-1 rounded-full text-xs font-medium z-10 relative
+                ${
+                  project.status === "completed"
+                    ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                    : project.status === "in-progress"
+                    ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                    : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                }
+              `}
+              >
+                {project.status === "completed"
+                  ? "Concluído"
+                  : project.status === "in-progress"
+                  ? "Em andamento"
+                  : "Planejamento"}
+              </span>
+            )}
 
-          {project.featured && (
-            <span className="px-2 py-1 bg-primary-purple/20 text-primary-purple text-xs rounded-full border border-primary-purple/30">
-              Destaque
+            {project.featured && (
+              <span className="px-2 py-1 bg-primary-purple/20 text-primary-purple text-xs rounded-full border border-primary-purple/30">
+                Destaque
+              </span>
+            )}
+          </div>
+
+          {/* Year Badge - Posicionado à direita */}
+          {project.year && (
+            <span className="bg-black/60 backdrop-blur-sm px-3 py-1 rounded-lg text-white text-xs font-medium flex-shrink-0">
+              {project.year}
             </span>
           )}
         </div>
@@ -203,13 +214,6 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
           )}
         </div>
       </div>
-
-      {/* Year Badge */}
-      {project.year && (
-        <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-md">
-          <span className="text-white text-xs font-medium">{project.year}</span>
-        </div>
-      )}
     </motion.article>
   );
 };

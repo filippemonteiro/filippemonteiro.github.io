@@ -13,7 +13,7 @@ function App() {
       <Navigation />
 
       {/* Main Content */}
-      <main className="relative">
+      <main className="relative pt-20">
         {/* Hero Section */}
         <Hero />
 
