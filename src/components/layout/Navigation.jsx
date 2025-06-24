@@ -59,7 +59,20 @@ const Navigation = () => {
                 {/* Avatar/Logo */}
                 <div className="relative">
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary-purple to-primary-blue p-0.5">
-                    <div className="w-full h-full rounded-full bg-dark-bg flex items-center justify-center">
+                    <img
+                      src="/img/avatar.jpg"
+                      alt="Filippe Monteiro"
+                      className="w-full h-full rounded-full object-cover"
+                      onError={(e) => {
+                        // Fallback para iniciais se imagem não carregar
+                        e.target.style.display = "none";
+                        e.target.nextElementSibling.style.display = "flex";
+                      }}
+                    />
+                    <div
+                      className="w-full h-full rounded-full bg-dark-bg flex items-center justify-center"
+                      style={{ display: "none" }}
+                    >
                       <span className="text-sm md:text-base font-bold text-gradient">
                         FM
                       </span>

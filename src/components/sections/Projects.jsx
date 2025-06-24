@@ -1,28 +1,46 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Filter, Grid, List, Github, ExternalLink } from "lucide-react";
+import { Filter, Grid, List, Github, ExternalLink, Star } from "lucide-react";
 import ProjectCard from "../ui/ProjectCard";
 import Button from "../ui/Button";
 import { projects, categories } from "../../data/projects";
 
 /**
- * Projects Section - Seção de projetos com filtros e diferentes visualizações
- * Baseado no design do Figma com grid responsivo
+ * Projects Section - UX melhorada sem duplicação
+ * Layout híbrido: Destaques + Outros quando "Todos" | Lista filtrada quando categoria específica
  */
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [viewMode, setViewMode] = useState("grid"); // 'grid' ou 'list'
 
-  // Filtrar projetos baseado na categoria selecionada
-  const filteredProjects = useMemo(() => {
+  // Lógica de filtragem melhorada
+  const { featuredProjects, otherProjects, filteredProjects } = useMemo(() => {
     if (selectedCategory === "all") {
-      return projects;
+      // Quando "Todos": separar em Destaques + Outros
+      const featured = projects.filter((project) => project.featured);
+      const others = projects.filter((project) => !project.featured);
+
+      return {
+        featuredProjects: featured,
+        otherProjects: others,
+        filteredProjects: [], // Não usado neste caso
+      };
+    } else {
+      // Quando categoria específica: apenas projetos dessa categoria
+      const filtered = projects.filter(
+        (project) => project.category === selectedCategory
+      );
+
+      return {
+        featuredProjects: [],
+        otherProjects: [],
+        filteredProjects: filtered,
+      };
     }
-    return projects.filter((project) => project.category === selectedCategory);
   }, [selectedCategory]);
 
-  // Projetos em destaque para mostrar primeiro
-  const featuredProjects = projects.filter((project) => project.featured);
+  // Verifica se está no modo "Todos"
+  const isShowingAll = selectedCategory === "all";
 
   return (
     <section id="projetos" className="py-20 relative overflow-hidden">
@@ -59,7 +77,7 @@ const Projects = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          {/* Filtros de categoria - Refinados */}
+          {/* Filtros de categoria */}
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory("all")}
@@ -68,140 +86,187 @@ const Projects = () => {
               }`}
             >
               <Filter size={14} />
-              Todos
+              Todos ({projects.length})
             </button>
 
-            {categories.map((category) => (
+            {categories.map((category) => {
+              const count = projects.filter(
+                (p) => p.category === category
+              ).length;
+              return (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`filter-btn ${
+                    selectedCategory === category ? "active" : ""
+                  }`}
+                >
+                  {category} ({count})
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Controles de visualização - só mostra quando não é "Todos" */}
+          {!isShowingAll && (
+            <div className="flex gap-1 bg-white/5 p-1 rounded-lg backdrop-blur-sm">
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`filter-btn ${
-                  selectedCategory === category ? "active" : ""
+                onClick={() => setViewMode("grid")}
+                className={`p-2 rounded-lg transition-all duration-300 ${
+                  viewMode === "grid"
+                    ? "bg-primary-purple text-white shadow-lg"
+                    : "text-gray-400 hover:text-white hover:bg-white/10"
                 }`}
               >
-                {category}
+                <Grid size={18} />
               </button>
-            ))}
-          </div>
-
-          {/* Controles de visualização - Refinados */}
-          <div className="flex gap-1 bg-white/5 p-1 rounded-lg backdrop-blur-sm">
-            <button
-              onClick={() => setViewMode("grid")}
-              className={`p-2 rounded-lg transition-all duration-300 ${
-                viewMode === "grid"
-                  ? "bg-primary-purple text-white shadow-lg"
-                  : "text-gray-400 hover:text-white hover:bg-white/10"
-              }`}
-            >
-              <Grid size={18} />
-            </button>
-            <button
-              onClick={() => setViewMode("list")}
-              className={`p-2 rounded-lg transition-all duration-300 ${
-                viewMode === "list"
-                  ? "bg-primary-purple text-white shadow-lg"
-                  : "text-gray-400 hover:text-white hover:bg-white/10"
-              }`}
-            >
-              <List size={18} />
-            </button>
-          </div>
+              <button
+                onClick={() => setViewMode("list")}
+                className={`p-2 rounded-lg transition-all duration-300 ${
+                  viewMode === "list"
+                    ? "bg-primary-purple text-white shadow-lg"
+                    : "text-gray-400 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                <List size={18} />
+              </button>
+            </div>
+          )}
         </motion.div>
 
-        {/* Projetos em destaque - sempre visível */}
-        {selectedCategory === "all" && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <h3 className="text-2xl font-semibold text-white mb-8 flex items-center">
-              <span className="w-3 h-3 bg-primary-purple rounded-full mr-3"></span>
-              Projetos em Destaque
-            </h3>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProjects.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={index}
-                  variant="featured"
-                />
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Grid/Lista de todos os projetos */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          {selectedCategory !== "all" && (
-            <h3 className="text-2xl font-semibold text-white mb-8 flex items-center">
-              <span className="w-3 h-3 bg-primary-blue rounded-full mr-3"></span>
-              {selectedCategory}
-            </h3>
-          )}
-
-          <AnimatePresence mode="wait">
+        {/* Layout baseado no filtro selecionado */}
+        <AnimatePresence mode="wait">
+          {isShowingAll ? (
+            // MODO "TODOS": Layout Híbrido (Destaques + Outros)
             <motion.div
-              key={`${selectedCategory}-${viewMode}`}
+              key="all-projects"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className={
-                viewMode === "grid"
-                  ? "grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  : "space-y-6"
-              }
+              transition={{ duration: 0.4 }}
             >
-              {filteredProjects.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={index}
-                  variant={viewMode === "list" ? "compact" : "default"}
-                />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Mensagem quando não há projetos */}
-          {filteredProjects.length === 0 && (
-            <motion.div
-              className="text-center py-16"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="glass-card p-8 max-w-md mx-auto">
-                <div className="w-16 h-16 bg-gray-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Filter size={24} className="text-gray-400" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  Nenhum projeto encontrado
-                </h3>
-                <p className="text-gray-400 mb-4">
-                  Não há projetos nesta categoria ainda.
-                </p>
-                <button
-                  onClick={() => setSelectedCategory("all")}
-                  className="text-primary-purple hover:text-primary-blue transition-colors duration-300"
+              {/* Seção Destaques */}
+              {featuredProjects.length > 0 && (
+                <motion.div
+                  className="mb-16"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
                 >
-                  Ver todos os projetos
-                </button>
+                  <div className="flex items-center mb-8">
+                    <Star className="text-yellow-400 mr-3" size={24} />
+                    <h3 className="text-2xl font-semibold text-white">
+                      Projetos em Destaque
+                    </h3>
+                    <div className="flex-1 ml-4 h-px bg-gradient-to-r from-yellow-400/50 to-transparent"></div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {featuredProjects.map((project, index) => (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        index={index}
+                        variant="featured"
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Seção Outros Projetos */}
+              {otherProjects.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center mb-8">
+                    <div className="w-3 h-3 bg-primary-blue rounded-full mr-3"></div>
+                    <h3 className="text-2xl font-semibold text-white">
+                      Outros Projetos
+                    </h3>
+                    <div className="flex-1 ml-4 h-px bg-gradient-to-r from-primary-blue/50 to-transparent"></div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {otherProjects.map((project, index) => (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        index={index}
+                        variant="compact"
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
+          ) : (
+            // MODO CATEGORIA: Lista filtrada
+            <motion.div
+              key={selectedCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="flex items-center mb-8">
+                <div className="w-3 h-3 bg-primary-purple rounded-full mr-3"></div>
+                <h3 className="text-2xl font-semibold text-white">
+                  {selectedCategory}
+                </h3>
+                <span className="ml-3 px-3 py-1 bg-white/10 text-gray-300 text-sm rounded-full">
+                  {filteredProjects.length} projeto
+                  {filteredProjects.length !== 1 ? "s" : ""}
+                </span>
+                <div className="flex-1 ml-4 h-px bg-gradient-to-r from-primary-purple/50 to-transparent"></div>
               </div>
+
+              {filteredProjects.length > 0 ? (
+                <div
+                  className={
+                    viewMode === "grid"
+                      ? "grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                      : "space-y-6"
+                  }
+                >
+                  {filteredProjects.map((project, index) => (
+                    <ProjectCard
+                      key={project.id}
+                      project={project}
+                      index={index}
+                      variant={viewMode === "list" ? "compact" : "default"}
+                    />
+                  ))}
+                </div>
+              ) : (
+                // Estado vazio
+                <div className="text-center py-16">
+                  <div className="glass-card p-8 max-w-md mx-auto">
+                    <div className="w-16 h-16 bg-gray-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Filter size={24} className="text-gray-400" />
+                    </div>
+                    <h4 className="text-xl font-semibold text-white mb-2">
+                      Nenhum projeto encontrado
+                    </h4>
+                    <p className="text-gray-400 mb-4">
+                      Não há projetos nesta categoria ainda.
+                    </p>
+                    <button
+                      onClick={() => setSelectedCategory("all")}
+                      className="text-primary-purple hover:text-primary-blue transition-colors duration-300"
+                    >
+                      ← Voltar para todos os projetos
+                    </button>
+                  </div>
+                </div>
+              )}
             </motion.div>
           )}
-        </motion.div>
+        </AnimatePresence>
 
         {/* Call to Action */}
         <motion.div
