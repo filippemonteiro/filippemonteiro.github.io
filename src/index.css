@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Importar fonte do Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* Reset e configurações base */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-dark-bg text-gray-100 font-normal;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Scrollbar personalizada para o tema dark */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-bg;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+/* Componentes reutilizáveis */
+@layer components {
+  /* Classe base para cards com glassmorphism */
+  .glass-card {
+    @apply bg-glass-white backdrop-blur-glass border border-white/10;
+    @apply rounded-xl shadow-glass;
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .glass-card:hover {
+    @apply bg-glass-white/80 border-white/20 transform -translate-y-1;
+    @apply shadow-glass shadow-primary-purple/20;
+  }
+
+  /* Botão primário com glassmorphism */
+  .btn-primary {
+    @apply bg-primary-purple/80 backdrop-blur-glass;
+    @apply border border-primary-purple/30;
+    @apply px-6 py-3 rounded-lg font-medium;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-primary-purple hover:scale-105;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-purple/50;
+    @apply text-white shadow-lg;
+  }
+
+  /* Botão secundário */
+  .btn-secondary {
+    @apply bg-glass-white backdrop-blur-glass;
+    @apply border border-white/20;
+    @apply px-6 py-3 rounded-lg font-medium;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-white/20 hover:scale-105;
+    @apply focus:outline-none focus:ring-2 focus:ring-white/50;
+    @apply text-gray-100;
+  }
+
+  /* Input com glassmorphism */
+  .input-glass {
+    @apply bg-glass-white backdrop-blur-glass;
+    @apply border border-white/20 rounded-lg;
+    @apply px-4 py-3 text-gray-100 placeholder-gray-400;
+    @apply transition-all duration-300 ease-out;
+    @apply focus:border-primary-purple/50 focus:ring-2 focus:ring-primary-purple/20;
+    @apply focus:outline-none;
+  }
+
+  /* Navigation link */
+  .nav-link {
+    @apply text-gray-300 hover:text-white;
+    @apply transition-all duration-300 ease-out;
+    @apply relative;
+  }
+
+  /* Efeito hover nos links de navegação */
+  .nav-link::after {
+    @apply absolute bottom-0 left-0 w-0 h-0.5;
+    @apply bg-gradient-to-r from-primary-purple to-primary-blue;
+    @apply transition-all duration-300 ease-out;
+    content: "";
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Container responsivo */
+  .container-responsive {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Utilities personalizadas */
+@layer utilities {
+  /* Gradiente de texto */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-purple via-primary-blue to-purple-400;
+    @apply bg-clip-text text-transparent;
+  }
+
+  /* Backdrop blur específico para glassmorphism */
+  .backdrop-glass {
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
+
+  /* Animação de entrada para elementos */
+  .animate-entrance {
+    @apply animate-fade-in;
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+  }
+
+  /* Variação de delay para animações escalonadas */
+  .animate-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 0.4s;
+  }
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
+  /* Ajustes específicos para mobile */
+  .glass-card {
+    @apply backdrop-blur-md; /* Menor blur em mobile para performance */
+  }
+
+  /* Typography responsiva */
+  h1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+
+  h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .glass-card {
+    @apply border-white/40 bg-black/60;
+  }
+
+  .btn-primary {
+    @apply bg-primary-purple border-primary-purple;
+  }
+}
