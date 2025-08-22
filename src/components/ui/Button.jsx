@@ -1,10 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-/**
- * Componente Button reutilizável com variantes glassmorphism
- * Suporta diferentes variantes, tamanhos e estados
- */
 const Button = ({
   children,
   variant = "primary",
@@ -17,7 +13,6 @@ const Button = ({
   iconPosition = "left",
   ...props
 }) => {
-  // Variantes de estilo
   const variants = {
     primary: "btn-primary hover:shadow-lg hover:shadow-primary-purple/25",
     secondary: "btn-secondary",
@@ -27,7 +22,6 @@ const Button = ({
     ghost: "hover:bg-white/10 text-gray-300 hover:text-white",
   };
 
-  // Tamanhos
   const sizes = {
     sm: "px-4 py-2 text-sm",
     md: "px-6 py-3 text-base",
@@ -35,7 +29,6 @@ const Button = ({
     xl: "px-10 py-5 text-xl",
   };
 
-  // Classes base
   const baseClasses = `
     inline-flex items-center justify-center gap-2 font-medium rounded-lg
     transition-all duration-300 ease-out
@@ -47,7 +40,6 @@ const Button = ({
     ${className}
   `;
 
-  // Animações com Framer Motion
   const buttonVariants = {
     initial: { scale: 1 },
     hover: {
@@ -60,7 +52,6 @@ const Button = ({
     },
   };
 
-  // Conteúdo do botão
   const buttonContent = (
     <>
       {Icon && iconPosition === "left" && (
@@ -77,7 +68,6 @@ const Button = ({
     </>
   );
 
-  // Se for um link
   if (href) {
     return (
       <motion.a
@@ -96,7 +86,6 @@ const Button = ({
     );
   }
 
-  // Botão normal
   return (
     <motion.button
       className={baseClasses}

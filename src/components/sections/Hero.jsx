@@ -3,13 +3,8 @@ import { motion } from 'framer-motion';
 import { ArrowDown, Download, MessageCircle, Eye } from 'lucide-react';
 import Button from '../ui/Button';
 
-/**
- * Hero Section - Seção principal de apresentação
- * Baseada no design do Figma com glassmorphism e animações
- */
+
 const Hero = () => {
-  
-  // Animações escalonadas
   const containerVariants = {
     initial: { opacity: 0 },
     animate: {
@@ -38,7 +33,6 @@ const Hero = () => {
     }
   };
 
-  // Função para scroll suave
   const scrollToProjects = () => {
     document.getElementById('projetos')?.scrollIntoView({ 
       behavior: 'smooth' 
@@ -47,10 +41,7 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      
-      {/* Background decorativo animado */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Círculos flutuantes maiores */}
         <motion.div 
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-purple/10 rounded-full blur-3xl"
           animate={{ 
@@ -77,7 +68,6 @@ const Hero = () => {
           }}
         />
         
-        {/* Partículas flutuantes */}
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
@@ -99,16 +89,12 @@ const Hero = () => {
           />
         ))}
       </div>
-
-      {/* Conteúdo principal */}
       <motion.div 
         className="relative z-10 container-responsive text-center"
         variants={containerVariants}
         initial="initial"
         animate="animate"
       >
-        
-        {/* Título principal */}
         <motion.div variants={itemVariants} className="mb-8">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
             <span className="block text-white mb-2">
@@ -126,11 +112,9 @@ const Hero = () => {
             transition={{ duration: 1, delay: 1 }}
           />
         </motion.div>
-
-        {/* Subtítulo */}
         <motion.div variants={itemVariants} className="mb-8">
           <p className="text-xl md:text-2xl text-gray-300 mb-4">
-            Desenvolvedor Front-End em transição para full-stack
+            Desenvolvedor Front-End
           </p>
           <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
             Apaixonado por criar aplicações web inovadoras e 
@@ -138,13 +122,10 @@ const Hero = () => {
             e ferramentas modernas de desenvolvimento.
           </p>
         </motion.div>
-
-        {/* Cards de destaque */}
         <motion.div 
           variants={itemVariants}
           className="grid md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto"
         >
-          {/* Card Skills */}
           <div className="glass-card p-6 text-left">
             <div className="w-12 h-12 bg-gradient-to-br from-primary-purple to-primary-blue rounded-lg flex items-center justify-center mb-4">
               <span className="text-white font-bold text-lg">⚡</span>
@@ -156,8 +137,6 @@ const Hero = () => {
               React.js, JavaScript ES6+, Tailwind CSS e ferramentas modernas
             </p>
           </div>
-
-          {/* Card Experiência */}
           <div className="glass-card p-6 text-left">
             <div className="w-12 h-12 bg-gradient-to-br from-primary-blue to-purple-500 rounded-lg flex items-center justify-center mb-4">
               <span className="text-white font-bold text-lg">🎯</span>
@@ -169,8 +148,6 @@ const Hero = () => {
               Interfaces acessíveis, responsivas e centradas na experiência
             </p>
           </div>
-
-          {/* Card Projetos */}
           <div className="glass-card p-6 text-left">
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
               <span className="text-white font-bold text-lg">🚀</span>
@@ -183,8 +160,6 @@ const Hero = () => {
             </p>
           </div>
         </motion.div>
-
-        {/* Call to Actions */}
         <motion.div 
           variants={itemVariants}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
@@ -209,17 +184,15 @@ const Hero = () => {
             Vamos conversar
           </Button>
 
-          <Button
+          {/* <Button
             variant="ghost"
             size="lg"
             href="/cv-filippe-monteiro.pdf"
             icon={Download}
           >
             Baixar CV
-          </Button>
+          </Button> */}
         </motion.div>
-
-        {/* Scroll indicator */}
         <motion.div 
           variants={itemVariants}
           className="flex flex-col items-center"
