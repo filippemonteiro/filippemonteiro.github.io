@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Sun, Moon, Menu, X, Home, User, Briefcase, Mail } from "lucide-react";
-// import { useTheme } from "../../hooks/useTheme";
 
 const Navigation = () => {
-  // const { theme, toggleTheme, isDark } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -91,38 +89,6 @@ const Navigation = () => {
                   <span className="text-sm">{item.label}</span>
                 </button>
               ))}
-            </div>
-
-            <div className="flex items-center space-x-3">
-              {/* <button
-                onClick={toggleTheme}
-                className="glass-card p-2 md:p-3 hover:scale-105 transition-all duration-300 group"
-                aria-label={`Alternar para tema ${isDark ? "claro" : "escuro"}`}
-              >
-                {isDark ? (
-                  <Sun
-                    size={20}
-                    className="text-yellow-400 group-hover:rotate-180 transition-transform duration-300"
-                  />
-                ) : (
-                  <Moon
-                    size={20}
-                    className="text-blue-400 group-hover:-rotate-12 transition-transform duration-300"
-                  />
-                )}
-              </button> */}
-
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden glass-card p-2 hover:scale-105 transition-all duration-300"
-                aria-label="Abrir menu"
-              >
-                {isMobileMenuOpen ? (
-                  <X size={20} className="text-white" />
-                ) : (
-                  <Menu size={20} className="text-white" />
-                )}
-              </button>
             </div>
           </div>
         </nav>
