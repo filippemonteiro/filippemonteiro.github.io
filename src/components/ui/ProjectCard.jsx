@@ -3,22 +3,16 @@ import { motion } from "framer-motion";
 import { ExternalLink, Github, Eye, ArrowRight } from "lucide-react";
 import Button from "./Button";
 
-/**
- * Componente ProjectCard - Card de projeto com glassmorphism
- * Mostra informações do projeto com hover effects e modal preview
- */
 const ProjectCard = ({ project, index = 0, variant = "default" }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  // Variantes do card
   const cardVariants = {
     default: "glass-card p-6 h-full",
     featured: "glass-card p-8 h-full border-2 border-primary-purple/30",
     compact: "glass-card p-4 h-full",
   };
 
-  // Animações de entrada
   const cardAnimation = {
     initial: {
       opacity: 0,
@@ -41,7 +35,6 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
     },
   };
 
-  // Placeholder para imagem
   const ImagePlaceholder = () => (
     <div className="w-full h-48 bg-gradient-to-br from-primary-purple/20 to-primary-blue/20 rounded-lg flex items-center justify-center">
       <div className="text-center">
@@ -63,7 +56,6 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      {/* Status, Featured Badges e Year */}
       {(project.status || project.featured || project.year) && (
         <div className="flex justify-between items-start mb-4">
           <div className="flex gap-2 flex-wrap">
@@ -95,7 +87,6 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
             )}
           </div>
 
-          {/* Year Badge - Posicionado à direita */}
           {project.year && (
             <span className="bg-black/60 backdrop-blur-sm px-3 py-1 rounded-lg text-white text-xs font-medium flex-shrink-0">
               {project.year}
@@ -104,7 +95,6 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
         </div>
       )}
 
-      {/* Project Image */}
       <div className="relative mb-6 overflow-hidden rounded-lg">
         {!imageError && project.image ? (
           <img
@@ -117,7 +107,6 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
           <ImagePlaceholder />
         )}
 
-        {/* Overlay com links */}
         <motion.div
           className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center gap-3 opacity-0 hover:opacity-100 transition-opacity duration-300"
           initial={{ opacity: 0 }}
@@ -146,31 +135,25 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
         </motion.div>
       </div>
 
-      {/* Project Info */}
       <div className="flex-1 flex flex-col">
-        {/* Category */}
         {project.category && (
           <span className="text-primary-purple text-sm font-medium mb-2">
             {project.category}
           </span>
         )}
 
-        {/* Title */}
         <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2">
           {project.title}
         </h3>
 
-        {/* Subtitle */}
         {project.subtitle && (
           <p className="text-gray-300 text-sm mb-3">{project.subtitle}</p>
         )}
 
-        {/* Description */}
         <p className="text-gray-400 text-sm mb-4 flex-1 line-clamp-3">
           {project.description}
         </p>
 
-        {/* Technologies */}
         {project.technologies && (
           <div className="flex flex-wrap gap-2 mb-4">
             {project.technologies.slice(0, 4).map((tech, index) => (
@@ -189,7 +172,6 @@ const ProjectCard = ({ project, index = 0, variant = "default" }) => {
           </div>
         )}
 
-        {/* Actions */}
         <div className="flex gap-2 mt-auto">
           {project.demoUrl && (
             <Button

@@ -13,9 +13,6 @@ import {
 } from "lucide-react";
 import Button from "../ui/Button";
 
-/**
- * Contact Section - Design otimizado com melhor UX/UI
- */
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -37,7 +34,6 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simular envio (aqui você integraria com um serviço real)
     setTimeout(() => {
       alert("Mensagem enviada com sucesso! Retornarei em breve.");
       setFormData({ name: "", email: "", message: "" });
@@ -45,7 +41,6 @@ const Contact = () => {
     }, 1000);
   };
 
-  // Função para copiar texto
   const copyToClipboard = async (text, item) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -56,7 +51,6 @@ const Contact = () => {
     }
   };
 
-  // Informações de contato otimizadas
   const contactMethods = [
     {
       id: "email",
@@ -107,13 +101,11 @@ const Contact = () => {
 
   return (
     <section id="contato" className="py-20 relative overflow-hidden">
-      {/* Background decorativo minimalista */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-purple/3 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container-responsive relative z-10">
-        {/* Header da seção */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -130,9 +122,7 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        {/* Layout otimizado - Single Column em mobile, Two columns em desktop */}
         <div className="max-w-5xl mx-auto">
-          {/* Métodos de contato principais - Cards horizontais */}
           <motion.div
             className="grid md:grid-cols-2 gap-6 mb-12"
             initial={{ opacity: 0, y: 30 }}
@@ -168,7 +158,6 @@ const Contact = () => {
                       </div>
                     </div>
 
-                    {/* Botão de copiar */}
                     {method.copyValue && (
                       <button
                         onClick={(e) => {
@@ -189,9 +178,7 @@ const Contact = () => {
               ))}
           </motion.div>
 
-          {/* Grid principal - Formulário + Info adicional */}
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Formulário - 2/3 da largura */}
             <motion.div
               className="lg:col-span-2"
               initial={{ opacity: 0, x: -30 }}
@@ -206,7 +193,6 @@ const Contact = () => {
                 </h3>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Nome e Email em linha no desktop */}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label
@@ -247,7 +233,6 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  {/* Mensagem */}
                   <div>
                     <label
                       htmlFor="message"
@@ -267,7 +252,6 @@ const Contact = () => {
                     />
                   </div>
 
-                  {/* Botão de envio */}
                   <Button
                     type="submit"
                     variant="primary"
@@ -283,7 +267,6 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            {/* Sidebar - Info adicional + Redes sociais */}
             <motion.div
               className="space-y-6"
               initial={{ opacity: 0, x: 30 }}
@@ -291,7 +274,6 @@ const Contact = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              {/* Localização */}
               <div className="glass-card p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <MapPin size={18} className="text-primary-purple" />
@@ -303,7 +285,6 @@ const Contact = () => {
                 </p>
               </div>
 
-              {/* Redes sociais */}
               <div className="glass-card p-6">
                 <h4 className="text-white font-medium mb-4 flex items-center">
                   <span className="w-2 h-2 bg-primary-purple rounded-full mr-3"></span>

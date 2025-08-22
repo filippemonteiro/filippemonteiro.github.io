@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Sun, Moon, Menu, X, Home, User, Briefcase, Mail } from "lucide-react";
-import { useTheme } from "../../hooks/useTheme";
+// import { useTheme } from "../../hooks/useTheme";
 
-/**
- * Componente Navigation - Header responsivo com glassmorphism
- * Desktop: Menu horizontal no topo
- * Mobile: Menu inferior fixo para facilitar uso com uma mão
- */
 const Navigation = () => {
-  const { theme, toggleTheme, isDark } = useTheme();
+  // const { theme, toggleTheme, isDark } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Detectar scroll para adicionar backdrop blur extra
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -22,7 +16,6 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Itens do menu
   const menuItems = [
     { id: "home", label: "Início", icon: Home, href: "#home" },
     { id: "sobre", label: "Sobre", icon: User, href: "#sobre" },
@@ -30,7 +23,6 @@ const Navigation = () => {
     { id: "contato", label: "Contato", icon: Mail, href: "#contato" },
   ];
 
-  // Função para scroll suave
   const handleScrollTo = (href) => {
     const element = document.querySelector(href);
     if (element) {
@@ -41,7 +33,6 @@ const Navigation = () => {
 
   return (
     <>
-      {/* Header Desktop/Tablet - Navbar fixa com liquid glass */}
       <header
         className={`
           navbar-glass fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out
@@ -50,13 +41,11 @@ const Navigation = () => {
       >
         <nav className="container-responsive">
           <div className="flex items-center justify-between h-16 md:h-18">
-            {/* Logo/Nome - Mais compacto */}
             <div className="flex-shrink-0 min-w-0">
               <button
                 onClick={() => handleScrollTo("#home")}
                 className="group flex items-center space-x-3 transition-all duration-300"
               >
-                {/* Avatar/Logo */}
                 <div className="relative">
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary-purple to-primary-blue p-0.5">
                     <img
@@ -64,7 +53,6 @@ const Navigation = () => {
                       alt="Filippe Monteiro"
                       className="w-full h-full rounded-full object-cover"
                       onError={(e) => {
-                        // Fallback para iniciais se imagem não carregar
                         e.target.style.display = "none";
                         e.target.nextElementSibling.style.display = "flex";
                       }}
@@ -78,11 +66,9 @@ const Navigation = () => {
                       </span>
                     </div>
                   </div>
-                  {/* Indicator online */}
                   <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-dark-bg"></div>
                 </div>
 
-                {/* Nome - Mais compacto */}
                 <div className="hidden sm:block min-w-0">
                   <h1 className="text-base md:text-lg font-semibold text-white group-hover:text-gradient transition-all duration-300 truncate">
                     Filippe Andrade Monteiro
@@ -94,7 +80,6 @@ const Navigation = () => {
               </button>
             </div>
 
-            {/* Menu Desktop - Mais compacto */}
             <div className="hidden md:flex items-center space-x-1 flex-shrink-0">
               {menuItems.map((item) => (
                 <button
@@ -108,10 +93,8 @@ const Navigation = () => {
               ))}
             </div>
 
-            {/* Actions Desktop */}
             <div className="flex items-center space-x-3">
-              {/* Theme Toggle */}
-              <button
+              {/* <button
                 onClick={toggleTheme}
                 className="glass-card p-2 md:p-3 hover:scale-105 transition-all duration-300 group"
                 aria-label={`Alternar para tema ${isDark ? "claro" : "escuro"}`}
@@ -127,9 +110,8 @@ const Navigation = () => {
                     className="text-blue-400 group-hover:-rotate-12 transition-transform duration-300"
                   />
                 )}
-              </button>
+              </button> */}
 
-              {/* Mobile Menu Toggle - Visible apenas em mobile */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="md:hidden glass-card p-2 hover:scale-105 transition-all duration-300"
@@ -145,7 +127,6 @@ const Navigation = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu Dropdown - Glassmorphism */}
         <div
           className={`
             md:hidden absolute top-full left-0 right-0 
@@ -177,7 +158,6 @@ const Navigation = () => {
         </div>
       </header>
 
-      {/* Mobile Bottom Navigation - Fixo na parte inferior */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50">
         <div className="glass-card backdrop-glass border-t border-white/20 rounded-t-2xl">
           <div className="flex items-center justify-around py-2">
@@ -202,7 +182,6 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* Overlay para mobile menu */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"

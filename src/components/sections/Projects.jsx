@@ -5,28 +5,22 @@ import ProjectCard from "../ui/ProjectCard";
 import Button from "../ui/Button";
 import { projects, categories } from "../../data/projects";
 
-/**
- * Projects Section - UX melhorada sem duplicação
- * Layout híbrido: Destaques + Outros quando "Todos" | Lista filtrada quando categoria específica
- */
+
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [viewMode, setViewMode] = useState("grid"); // 'grid' ou 'list'
+  const [viewMode, setViewMode] = useState("grid");
 
-  // Lógica de filtragem melhorada
   const { featuredProjects, otherProjects, filteredProjects } = useMemo(() => {
     if (selectedCategory === "all") {
-      // Quando "Todos": separar em Destaques + Outros
       const featured = projects.filter((project) => project.featured);
       const others = projects.filter((project) => !project.featured);
 
       return {
         featuredProjects: featured,
         otherProjects: others,
-        filteredProjects: [], // Não usado neste caso
+        filteredProjects: [],
       };
     } else {
-      // Quando categoria específica: apenas projetos dessa categoria
       const filtered = projects.filter(
         (project) => project.category === selectedCategory
       );
@@ -39,19 +33,16 @@ const Projects = () => {
     }
   }, [selectedCategory]);
 
-  // Verifica se está no modo "Todos"
   const isShowingAll = selectedCategory === "all";
 
   return (
     <section id="projetos" className="py-20 relative overflow-hidden">
-      {/* Background decorativo */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-purple/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary-blue/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container-responsive relative z-10">
-        {/* Header da seção */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -65,11 +56,10 @@ const Projects = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-primary-purple to-primary-blue mx-auto rounded-full mb-8"></div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Uma seleção dos meus trabalhos mais recentes, mostrando minhas
-            habilidades e experiência em desenvolvimento front-end e full-stack.
+            habilidades e experiência em desenvolvimento front-end.
           </p>
         </motion.div>
 
-        {/* Controles de filtro e visualização */}
         <motion.div
           className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4"
           initial={{ opacity: 0, y: 20 }}
@@ -77,7 +67,6 @@ const Projects = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          {/* Filtros de categoria */}
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory("all")}
@@ -107,7 +96,6 @@ const Projects = () => {
             })}
           </div>
 
-          {/* Controles de visualização - só mostra quando não é "Todos" */}
           {!isShowingAll && (
             <div className="flex gap-1 bg-white/5 p-1 rounded-lg backdrop-blur-sm">
               <button
@@ -134,10 +122,8 @@ const Projects = () => {
           )}
         </motion.div>
 
-        {/* Layout baseado no filtro selecionado */}
         <AnimatePresence mode="wait">
           {isShowingAll ? (
-            // MODO "TODOS": Layout Híbrido (Destaques + Outros)
             <motion.div
               key="all-projects"
               initial={{ opacity: 0, y: 20 }}
@@ -145,7 +131,6 @@ const Projects = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              {/* Seção Destaques */}
               {featuredProjects.length > 0 && (
                 <motion.div
                   className="mb-16"
@@ -175,7 +160,6 @@ const Projects = () => {
                 </motion.div>
               )}
 
-              {/* Seção Outros Projetos */}
               {otherProjects.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -205,7 +189,6 @@ const Projects = () => {
               )}
             </motion.div>
           ) : (
-            // MODO CATEGORIA: Lista filtrada
             <motion.div
               key={selectedCategory}
               initial={{ opacity: 0, y: 20 }}
@@ -243,7 +226,6 @@ const Projects = () => {
                   ))}
                 </div>
               ) : (
-                // Estado vazio
                 <div className="text-center py-16">
                   <div className="glass-card p-8 max-w-md mx-auto">
                     <div className="w-16 h-16 bg-gray-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -268,7 +250,6 @@ const Projects = () => {
           )}
         </AnimatePresence>
 
-        {/* Call to Action */}
         <motion.div
           className="text-center mt-16"
           initial={{ opacity: 0, y: 30 }}

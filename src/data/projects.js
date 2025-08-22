@@ -1,8 +1,3 @@
-/**
- * Dados dos projetos do portfólio
- * Baseado nas informações do Figma e README existente
- */
-
 export const projects = [
   {
     id: 'drip-store',
@@ -55,7 +50,7 @@ export const projects = [
     year: '2024',
     client: 'Projeto Social - Revitalização Urbana',
     duration: '2 meses',
-    role: 'Full-Stack Developer & Designer',
+    role: 'Front-End Developer & Designer',
     challenges: [
       'Design system coeso para múltiplas plataformas',
       'Integração com conteúdo de podcast',
@@ -99,7 +94,6 @@ export const projects = [
       'Tempo de carregamento < 2 segundos'
     ]
   },
-  // Projetos de design/identidade visual usando as imagens de logo
   {
     id: 'logo-manula-cirurgia',
     title: 'Identidade Visual - Manula Cirurgia',
@@ -166,10 +160,9 @@ export const projects = [
   }
 ];
 
-// Projetos em destaque para a home
 export const featuredProjects = projects.filter(project => project.featured);
 
-// Categorias disponíveis
+
 export const categories = [
   'E-commerce', 
   'Website Institucional', 
@@ -177,7 +170,7 @@ export const categories = [
   'Design Gráfico'
 ];
 
-// Status dos projetos
+
 export const projectStatuses = {
   'completed': 'Concluído',
   'in-progress': 'Em andamento',
